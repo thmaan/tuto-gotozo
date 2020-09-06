@@ -3,34 +3,83 @@
 {% block content %}
     <div class="post">
         {% if post.published_date %}
-    		<div class="date">
-        		{{ post.published_date }}
-    		</div>
 		{% else %}
-    		<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+    		<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">
+                <span class="fa fa-share-square-o"></span>Publish</a>
 		{% endif %}
         {% if user.is_authenticated %}
-    		<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+    		<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="fa fa-pencil-square-o"></span>Edit</a>
 		{% endif %}
-		<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
+		<a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}"><span class="fa fa-eraser"></span>Delete</a>
         <h2>{{ post.title }}</h2>
-        <p>{{ post.text|linebreaksbr }}</p>
+        <div>
+            <div class="imag_overview">   
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" style="width:100%" >
+            </div>
+            <div>
+                Ingredients
+                <hr >
+                {% for ingredient in post.ingredients.all %}    
+                    {{ ingredient.quantity  }} {{ ingredient.name }} 
+                {% empty %}
+                    no ingredients
+                {% endfor %}
+
+            </div>
+        <hr>
+        <div>Cooking Method
+        </div>
+        <hr >
+        <p>{{ post.cooking_method|linebreaksbr }}</p>
+        <div class="date">
+                {{ post.published_date }}
+        </div>
+        <hr >
+        <div>
+             {{ post.views }} views
+        </div>
+        {% if reacted == False %}
+            <a href="{% url 'post_like' pk=post.pk %}">
+                <span class="fa fa-thumbs-o-up"></span>
+                    {{ post.like_count }} </a>
+            <a href="{% url 'post_deslike' pk=post.pk %}">
+                <span class="fa fa-thumbs-o-down"></span>
+                    {{ post.deslike_count }}
+            </a>
+            {% else %}
+                {% if liked %}
+                     <a href="{% url 'post_like' pk=post.pk %}">
+                        <span class="fa fa-thumbs-o-up""></span>
+                        {{ post.like_count }}
+                    </a>
+                {% else %}
+                     <a href="{% url 'post_deslike' pk=post.pk %}">
+                     <span class="fa fa-thumbs-o-down"></span>
+                         {{ post.deslike_count }}
+                    </a>
+            {% endif %}
+        {% endif %}
+        <div>
+            <span class="fa fa-thumbs-o-up"></span>
+                {{ percent_likes|floatformat }} % &nbsp; | &nbsp;
+            <span class="fa fa-thumbs-o-down">
+                {{ percent_deslikes|floatformat }}</span>
+        </div>
     </div>
     <hr>
-    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}"><span class="fa fa-comment"> Comment here!</span></a>
     {% for comment in post.comments.all %}
         {% if user.is_authenticated or comment.approved_comment %}
             <div class="comment">
                 <div class="date">
                     {{ comment.created_date }}
                     {% if not comment.approved_comment %}
-                        <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="glyphicon glyphicon-remove"></span></a>
-                        <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="glyphicon glyphicon-ok"></span></a>
+                        <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}"><span class="fa fa-times"></span></a>
+                        <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}"><span class="fa fa-check"></span></a>
                     {% endif %}
                 </div>
                 <strong>{{ comment.author }}</strong>
                 <p>{{ comment.text|linebreaks }}</p>
-            </div>
         {% endif %}
     {% empty %}
         <p>No comments here yet :(</p>

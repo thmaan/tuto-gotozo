@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% for ingredient in ingredients %}
+    <div>
+        Ingredient name:
+        <h2>{{ ingredient.name }}</h2>
+        
+    </div>
+    <hr />
+    {% empty %}
+        no ingredients
+    {% endfor %}
+{% endblock content %}

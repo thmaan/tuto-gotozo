@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+	{% if submitbutton == 'Search' and request.GET.q != '' %}
+		{% if results %}
+			<h1>Results for <b>{{ request.GET.q }}</b></h1>
+			{% for result in results %}	
+				<h1><a href="{% url 'post_detail' pk=result.pk %}">{{ result.title }}</a></h1>
+		            <p>{{ result.cooking_method|linebreaksbr }}</p>
+			{% endfor %}
+		{% else %}
+			<h1>No search results for this query.</h1>
+		{% endif %}
+	{% else %}
+		<h1>You must inform a valid search.</h1>
+	{% endif %}
+{% endblock %}

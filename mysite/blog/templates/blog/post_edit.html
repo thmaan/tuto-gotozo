@@ -1,9 +1,36 @@
 {% extends 'blog/base.html' %}
-
 {% block content %}
-    <h2>New post</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+    <h2>New Post</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+	    	{% csrf_token %}
+	    	<ul style="list-style-type:none">
+	    	<div class="container">
+			  <div class="row">
+			    <div class="col">
+			      Title:  	{{ form.title }}	
+			      <hr >			    				    
+			    <div class="col">
+			    	Ingredients
+				    <div>
+				    {{ form.ingredients }}
+				    	<a href="{% url 'ingredient_new' %}" ><span class="fa fa-pencil"></	span> New Ingredient</a>
+			    	</div>
+			    	<hr >
+			    <div class="col">
+			    	Cooking Method:
+			    	<div>
+			    		{{ form.cooking_method }}
+			    	</div>
+			    	<hr >
+			    	<div>
+			    		<a href="{{ post.image.url }}" alt="{{ post.title}}" style="max-width:400px">
+			    			{{ form.image }}
+			    	</div>
+			    	<div>
+						<button type="submit" class="save btn btn-success">Save</button>	
+					</div>
+			    </div>
+			  </div>
+			</div>   
+	</form>
 {% endblock %}
