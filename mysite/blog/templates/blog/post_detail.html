@@ -16,9 +16,9 @@
             <div class="imag_overview">   
                 <img src="{{ post.image.url }}" alt="{{ post.title }}" style="width:100%" >
             </div>
+            <hr >
             <div>
-                Ingredients
-                <hr >
+                Ingredients:
                 {% for ingredient in post.ingredients.all %}    
                     {{ ingredient.quantity  }} {{ ingredient.name }} 
                 {% empty %}
@@ -27,9 +27,7 @@
 
             </div>
         <hr>
-        <div>Cooking Method
-        </div>
-        <hr >
+        <div>Cooking Method:
         <p>{{ post.cooking_method|linebreaksbr }}</p>
         <div class="date">
                 {{ post.published_date }}

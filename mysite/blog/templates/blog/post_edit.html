@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-    <h2>New Post</h2>
+    <h2>New Recipe</h2>
     <form action="" method="post" enctype="multipart/form-data">
 	    	{% csrf_token %}
 	    	<ul style="list-style-type:none">
@@ -12,9 +12,10 @@
 			    <div class="col">
 			    	Ingredients
 				    <div>
-				    {{ form.ingredients }}
-				    	<a href="{% url 'ingredient_new' %}" ><span class="fa fa-pencil"></	span> New Ingredient</a>
+				     {{ form.ingredients }}
+				    	<a href="{% url 'ingredient_new' %}" target="_blank" > <span class="fa fa-plus"></span> New Ingredient</a>
 			    	</div>
+			   </div>
 			    	<hr >
 			    <div class="col">
 			    	Cooking Method:
@@ -23,7 +24,7 @@
 			    	</div>
 			    	<hr >
 			    	<div>
-			    		<a href="{{ post.image.url }}" alt="{{ post.title}}" style="max-width:400px">
+			    		<a href="{{ post.image.url }}" alt="{{ post.title }}" style="max-width:400px">
 			    			{{ form.image }}
 			    	</div>
 			    	<div>

@@ -143,7 +143,7 @@ def ingredient_new(request):
     return render(request,'blog/ingredient_edit.html',{'form': form})
 
 def ingredients_list(request):
-    ingredients = Ingredients.objects.filter().order_by('-quantity')
+    ingredients = Ingredients.objects.filter().order_by('name')
     return render(request, 'blog/ingredient_list.html', {'ingredients': ingredients})
 
 def searchposts(request):

@@ -6,6 +6,7 @@
 			<h1>Results for <b>{{ request.GET.q }}</b></h1>
 			{% for result in results %}	
 				<h1><a href="{% url 'post_detail' pk=result.pk %}">{{ result.title }}</a></h1>
+					<img src="{{ result.image.url }}" alt="{{ result.title }}" width="200" height="160">
 		            <p>{{ result.cooking_method|linebreaksbr }}</p>
 			{% endfor %}
 		{% else %}

@@ -1,30 +1,66 @@
 {% load static %}
 <html>
     <head>
-        <title>Django blog</title>
-        <link href='//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <title>TutoGotozo</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
     </head>
     <body>
         <div class="page-header">
             {% if user.is_authenticated %}
-                <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-                <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
-                <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+                <a href="{% url 'recipe_draft_list' %}" class="top-menu"><span class="fa fa-pencil-square-o"></span>Drafts</a>
+                <p class="top-menu">Hello {{ user.username }} 
+                    <small>(<a href="{% url 'logout' %}">   
+                      <span class="fa fa-sign-out"></span>
+                    </a>)</small>
+                </p>
             {% else %}
-                <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+                <a href="{% url 'login' %}" class="top-menu"><span class="fa fa-sign-in"></span></a>
             {% endif %}
-            <h1><a href="/">Django Girls Blog</a></h1>
+            <h1><a href="/">TutoGotozo</h1>
         </div>
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
+              <a class="navbar-brand" href="{% url 'recipe_list' %}"><span class="fa fa-home"></span> Home</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'recipe_new' %}" class="top-menu"><span class="fa fa-plus"></span> New Post</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ingredient_new' %}" class="top-menu"><span class="fa fa-pencil"></span> New Ingredient</a>
+                  </li> 
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ingredients_list' %}" class="top-menu"><span class="fa fa-pencil"></span> Igredients</a>
+                  </li>  
+                </ul>
+              </div>  
+              <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+                 <form class="form-inline" action="{% url 'search_recipes' %}" method="GET" value="{{request.GET.q}}">
+                    <input type="text" name="q" class="form-control mr-sm-2" placeholder="Search">
+                    <input class="btn btn-success" type="submit"n name="submit" value="Search"></button>
+                  </form>
+              </nav>         
+        </nav>    
+            <div class="container" >
                 {% block content %}
                 {% endblock %}
-                </div>
+            <div class="row"> 
+            <div class="col-sm-8">
+                <a href="{% url 'polls:index' %}"><span class="fa fa-commenting-o"></span>
+                    Answer our poll!
+                </a>
             </div>
+          </div>
         </div>
+
     </body>
 </html>
+

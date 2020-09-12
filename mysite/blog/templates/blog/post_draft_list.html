@@ -10,6 +10,8 @@
             	<img src="{{ post.image.url }}" alt="{{ post.title }}" width="500" height="600">
             </p>
         </div>
+        {% empty %}
+        <h1>The draft list is empty.</h1>
     {% endfor %}
 {% endblock %}
 
